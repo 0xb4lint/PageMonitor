@@ -95,5 +95,8 @@ exports.parse = function(url, options) {
 		// open in browser
 		for ( var i = 0; i < uj.length; i++ )
 			setTimeout(open, i * 200, options.open_url + uj[i]);
+
+		if ( options.callback && typeof options.callback === 'function' )
+			options.callback();
 	});
 };

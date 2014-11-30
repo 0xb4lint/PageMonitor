@@ -36,9 +36,12 @@ var hasznaltauto_hu = function() {
 
 			return attribute.split('_')[1];
 		},
-		open_url:			'http://www.hasznaltauto.hu/auto/yolo-'
+		open_url:			'http://www.hasznaltauto.hu/auto/yolo-',
+		callback:			hasznaltauto_hu2
 	});
 };
+
+
 
 var hasznaltauto_hu2 = function() {
 
@@ -64,6 +67,3 @@ var hasznaltauto_hu2 = function() {
 
 hasznaltauto_hu();
 setInterval(hasznaltauto_hu, 1000 * 60 * 60);
-
-hasznaltauto_hu2();
-setInterval(hasznaltauto_hu2, 1000 * 60 * 61);
