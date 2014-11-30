@@ -9,12 +9,12 @@ var _		= require('underscore');
 
 
 
-function diff(A, B) {
+var diff = function(A, B) {
 
 	return A.filter(function (a) {
 		return B.indexOf(a) == -1;
 	});
-}
+};
 
 
 
@@ -73,8 +73,15 @@ exports.parse = function(url, options) {
 			found.push( attribute );
 		});
 
+		found.sort();
+		found.reverse();
+
+		var mixed = _.unique( database.concat( found ) );
+		mixed.sort();
+		mixed.reverse();
+
 		// write to database
-		fs.writeFileSync(json_file, JSON.stringify( _.unique( database.concat( found ) )));
+		fs.writeFileSync(json_file, JSON.stringify( mixed ) );
 
 		// diff
 		var uj = diff( found, database );
@@ -87,6 +94,6 @@ exports.parse = function(url, options) {
 
 		// open in browser
 		for ( var i = 0; i < uj.length; i++ )
-			open(options.open_url + uj[i]);
+			setTimeout(open, i * 200, options.open_url + uj[i]);
 	});
 };
