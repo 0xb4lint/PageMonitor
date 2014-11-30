@@ -1,0 +1,8 @@
+{
+  "name": "scripts",
+  "dependencies": {
+    "cheerio": "^0.18.0",
+    "open": "0.0.5",
+    "request": "^2.49.0"
+  }
+}
