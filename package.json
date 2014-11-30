@@ -3,6 +3,7 @@
   "dependencies": {
     "cheerio": "^0.18.0",
     "open": "0.0.5",
-    "request": "^2.49.0"
+    "request": "^2.49.0",
+    "underscore": "^1.7.0"
   }
 }
