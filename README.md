@@ -1,7 +1,7 @@
 PageMonitor
 ===========
-# Install
+## Install
 - `npm install`
 
-# Usage
+## Usage
 - `node index`
