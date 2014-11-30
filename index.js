@@ -40,6 +40,20 @@ var hasznaltauto_hu = function() {
 	});
 };
 
+var hasznaltauto_hu2 = function() {
+
+	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/2G4ZLM3QHYHGDGFCJKPAS2Q1GF988GTHYEZ9GD9U7UM8GA023UAHHC4KE1AL3YL205F8W1GMMMDIFKC04OEWMFU7DWL68HHPDF1U3FQLOPW6USTQH1H66FOGMT3I0TYCCU816LRAT9A0O3547AAS76WEQI0T4CWMFG84YM59841O8HP5LF6I8G1EIOW63WL5YGUQH81PYWL78HGUQ2WJWUZC788TYUIJP3GSUYKPWLCL3CTIOTGSO5ZA64MWLCGP8J6E8450R178ZCKU9SUOZL0HQJ31KAI3LJZ5YA0CGA1GCW603I1EJR2AD68TZSJQD/page2', {
+		name:				'hasznaltauto.hu',
+		selector:			'.talalati_lista .talalati_lista_parkolo_cont [id$="_on"]',
+		attribute:			'id',
+		attribute_modify:	function(attribute) {
+
+			return attribute.split('_')[1];
+		},
+		open_url:			'http://www.hasznaltauto.hu/auto/yolo-'
+	});
+};
+
 
 
 //alberlet_hu();
@@ -50,3 +64,6 @@ var hasznaltauto_hu = function() {
 
 hasznaltauto_hu();
 setInterval(hasznaltauto_hu, 1000 * 60 * 60);
+
+hasznaltauto_hu2();
+setInterval(hasznaltauto_hu2, 1000 * 60 * 61);
