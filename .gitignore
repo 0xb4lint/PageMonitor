@@ -42,3 +42,4 @@ composer.lock
 /vendor
 
 # Project specific rules from here
+/storage
