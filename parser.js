@@ -28,7 +28,8 @@ exports.parse = function(url, options) {
 		fs.writeFileSync(json_file, JSON.stringify( [] ));
 
 	// load database
-	var database	= require(json_file);
+	delete require.cache[require.resolve( json_file )];
+	var database = require(json_file);
 
 	// OS X notification
 	exec('osascript -e \'display notification "parsing..." with title "' + options.name + '"\'');
@@ -73,18 +74,26 @@ exports.parse = function(url, options) {
 			found.push( attribute );
 		});
 
+		// diff
+		var uj = diff( found, database );
+
 		found.sort();
 		found.reverse();
 
-		var mixed = _.unique( database.concat( found ) );
-		mixed.sort();
-		mixed.reverse();
+		console.log(options.name);
+		console.log(url);
+		console.log('found', found.length);
+		console.log('database', database.length);
+		console.log('uj', uj.length);
+
+		database = _.unique( database.concat( found ) );
+
+		console.log('new database', database.length);
 
 		// write to database
-		fs.writeFileSync(json_file, JSON.stringify( mixed ) );
+		fs.writeFileSync(json_file, JSON.stringify( database ) );
 
-		// diff
-		var uj = diff( found, database );
+		console.log('======');
 
 		// OS X notification
 		if ( uj.length )
