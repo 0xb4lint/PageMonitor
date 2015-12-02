@@ -28,8 +28,7 @@ exports.parse = function(url, options) {
 		fs.writeFileSync(json_file, JSON.stringify( [] ));
 
 	// load database
-	delete require.cache[require.resolve( json_file )];
-	var database = require(json_file);
+	var database = JSON.parse( fs.readFileSync(json_file) );
 
 	// OS X notification
 	exec('osascript -e \'display notification "parsing..." with title "' + options.name + '"\'');
@@ -91,7 +90,7 @@ exports.parse = function(url, options) {
 		console.log('new database', database.length);
 
 		// write to database
-		fs.writeFileSync(json_file, JSON.stringify( database ) );
+		fs.writeFileSync(json_file, JSON.stringify( database, null, '\t' ) );
 
 		console.log('======');
 
@@ -103,9 +102,9 @@ exports.parse = function(url, options) {
 
 		// open in browser
 		for ( var i = 0; i < uj.length; i++ )
-			setTimeout(open, i * 200, options.open_url + uj[i]);
+			setTimeout(open, i * 200, options.open_url + uj[i] + ( typeof options.open_url_postfix != 'undefined' ? options.open_url_postfix : '' ));
 
 		if ( options.callback && typeof options.callback === 'function' )
-			options.callback();
+			setTimeout(options.callback, 500);
 	});
 };

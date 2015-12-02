@@ -28,7 +28,7 @@ var ingatlan_com = function() {
 
 var hasznaltauto_hu = function() {
 
-	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/2G4ZLM3QHYHGDGFCJKPAS2Q1GF988GTHYEZ9GD9U7UM8GA023UAHHC4KE1AL3YL205F8W1GMMMDIFKC04OEWMFU7DWL68HHPDF1U3FQLOPW6USTQH1H66FOGMT3I0TYCCU816LRAT9A0O3547AAS76WEQI0T4CWMFG84YM59841O8HP5LF6I8G1EIOW63WL5YGUQH81PYWL78HGUQ2WJWUZC788TYUIJP3GSUYKPWLCL3CTIOTGSO5ZA64MWLCGP8J6E8450R178ZCKU9SUOZL0HQJ31KAI3LJZ5YA0CGA1GCW603I1EJR2AD68TZSJQD/page1', {
+	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/T4R1MS7LU76AO22Z6TTHGOO8LHGH2OUPF9YZC7FA93QS3UDJLY4PSQZTA52W7T8JRJJU14QYWUERML9E074SH6OQLO0U0DR024C65RLODL8EFPF573LK5E9W195A34YFM4CWR05MY94FP580G1EOR5P7P8E801AHFR96GWK4ZD6CKYMWLLP5HJPJQJFY37UTDTJFQ12UKPFCZWDR355HA8CHRPQPO1A1J56KR5JW1JHKP2LPGRW0KIKMSSE5KJE643Y20T8K6R0Q0JKCWTE7RPMZJAG7TJ5UFH65CISGMFUO8DIQ15Q68I08D0D502JES9OG0QTEPETIMRCL95ZG5DC8AFM17HZ3YEP5MG4YU1YOLKTGMQD8EK3S5LQYUPKPT9AWAU1UJJKJESEOI5ACZ7TTFWS35HQ7T7YLWR5MIKK5TM6FLCTYG4R459O/page1', {
 		name:				'hasznaltauto.hu',
 		selector:			'.talalati_lista .talalati_lista_parkolo_cont [id$="_on"]',
 		attribute:			'id',
@@ -41,11 +41,9 @@ var hasznaltauto_hu = function() {
 	});
 };
 
-
-
 var hasznaltauto_hu2 = function() {
 
-	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/2G4ZLM3QHYHGDGFCJKPAS2Q1GF988GTHYEZ9GD9U7UM8GA023UAHHC4KE1AL3YL205F8W1GMMMDIFKC04OEWMFU7DWL68HHPDF1U3FQLOPW6USTQH1H66FOGMT3I0TYCCU816LRAT9A0O3547AAS76WEQI0T4CWMFG84YM59841O8HP5LF6I8G1EIOW63WL5YGUQH81PYWL78HGUQ2WJWUZC788TYUIJP3GSUYKPWLCL3CTIOTGSO5ZA64MWLCGP8J6E8450R178ZCKU9SUOZL0HQJ31KAI3LJZ5YA0CGA1GCW603I1EJR2AD68TZSJQD/page2', {
+	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/T4R1MS7LU76AO22Z6TTHGOO8LHGH2OUPF9YZC7FA93QS3UDJLY4PSQZTA52W7T8JRJJU14QYWUERML9E074SH6OQLO0U0DR024C65RLODL8EFPF573LK5E9W195A34YFM4CWR05MY94FP580G1EOR5P7P8E801AHFR96GWK4ZD6CKYMWLLP5HJPJQJFY37UTDTJFQ12UKPFCZWDR355HA8CHRPQPO1A1J56KR5JW1JHKP2LPGRW0KIKMSSE5KJE643Y20T8K6R0Q0JKCWTE7RPMZJAG7TJ5UFH65CISGMFUO8DIQ15Q68I08D0D502JES9OG0QTEPETIMRCL95ZG5DC8AFM17HZ3YEP5MG4YU1YOLKTGMQD8EK3S5LQYUPKPT9AWAU1UJJKJESEOI5ACZ7TTFWS35HQ7T7YLWR5MIKK5TM6FLCTYG4R459O/page2', {
 		name:				'hasznaltauto.hu',
 		selector:			'.talalati_lista .talalati_lista_parkolo_cont [id$="_on"]',
 		attribute:			'id',
@@ -60,7 +58,7 @@ var hasznaltauto_hu2 = function() {
 
 var hasznaltauto_hu3 = function() {
 
-	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/2G4ZLM3QHYHGDGFCJKPAS2Q1GF988GTHYEZ9GD9U7UM8GA023UAHHC4KE1AL3YL205F8W1GMMMDIFKC04OEWMFU7DWL68HHPDF1U3FQLOPW6USTQH1H66FOGMT3I0TYCCU816LRAT9A0O3547AAS76WEQI0T4CWMFG84YM59841O8HP5LF6I8G1EIOW63WL5YGUQH81PYWL78HGUQ2WJWUZC788TYUIJP3GSUYKPWLCL3CTIOTGSO5ZA64MWLCGP8J6E8450R178ZCKU9SUOZL0HQJ31KAI3LJZ5YA0CGA1GCW603I1EJR2AD68TZSJQD/page3', {
+	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/T4R1MS7LU76AO22Z6TTHGOO8LHGH2OUPF9YZC7FA93QS3UDJLY4PSQZTA52W7T8JRJJU14QYWUERML9E074SH6OQLO0U0DR024C65RLODL8EFPF573LK5E9W195A34YFM4CWR05MY94FP580G1EOR5P7P8E801AHFR96GWK4ZD6CKYMWLLP5HJPJQJFY37UTDTJFQ12UKPFCZWDR355HA8CHRPQPO1A1J56KR5JW1JHKP2LPGRW0KIKMSSE5KJE643Y20T8K6R0Q0JKCWTE7RPMZJAG7TJ5UFH65CISGMFUO8DIQ15Q68I08D0D502JES9OG0QTEPETIMRCL95ZG5DC8AFM17HZ3YEP5MG4YU1YOLKTGMQD8EK3S5LQYUPKPT9AWAU1UJJKJESEOI5ACZ7TTFWS35HQ7T7YLWR5MIKK5TM6FLCTYG4R459O/page3', {
 		name:				'hasznaltauto.hu',
 		selector:			'.talalati_lista .talalati_lista_parkolo_cont [id$="_on"]',
 		attribute:			'id',
@@ -68,7 +66,78 @@ var hasznaltauto_hu3 = function() {
 
 			return attribute.split('_')[1];
 		},
-		open_url:			'http://www.hasznaltauto.hu/auto/yolo-'
+		open_url:			'http://www.hasznaltauto.hu/auto/yolo-',
+		callback:			hasznaltauto_hu4
+	});
+};
+
+var hasznaltauto_hu4 = function() {
+
+	parser.parse('http://www.hasznaltauto.hu/talalatilista/auto/T4R1MS7LU76AO22Z6TTHGOO8LHGH2OUPF9YZC7FA93QS3UDJLY4PSQZTA52W7T8JRJJU14QYWUERML9E074SH6OQLO0U0DR024C65RLODL8EFPF573LK5E9W195A34YFM4CWR05MY94FP580G1EOR5P7P8E801AHFR96GWK4ZD6CKYMWLLP5HJPJQJFY37UTDTJFQ12UKPFCZWDR355HA8CHRPQPO1A1J56KR5JW1JHKP2LPGRW0KIKMSSE5KJE643Y20T8K6R0Q0JKCWTE7RPMZJAG7TJ5UFH65CISGMFUO8DIQ15Q68I08D0D502JES9OG0QTEPETIMRCL95ZG5DC8AFM17HZ3YEP5MG4YU1YOLKTGMQD8EK3S5LQYUPKPT9AWAU1UJJKJESEOI5ACZ7TTFWS35HQ7T7YLWR5MIKK5TM6FLCTYG4R459O/page4', {
+		name:				'hasznaltauto.hu',
+		selector:			'.talalati_lista .talalati_lista_parkolo_cont [id$="_on"]',
+		attribute:			'id',
+		attribute_modify:	function(attribute) {
+
+			return attribute.split('_')[1];
+		},
+		open_url:			'http://www.hasznaltauto.hu/auto/yolo-',
+		//callback:			hasznaltauto_hu5
+	});
+};
+
+
+
+var jofogas_hu = function() {
+
+	parser.parse('http://www.jofogas.hu/magyarorszag/auto?q=golf%20v', {
+		name:				'jofogas.hu',
+		selector:			'.ad-list .ad-list-item',
+		attribute:			'data-list-id',
+		open_url:			'http://www.jofogas.hu/magyarorszag/yolo_',
+		open_url_postfix:	'.htm',
+		callback:			jofogas_hu2
+	});
+};
+
+var jofogas_hu2 = function() {
+
+	parser.parse('http://www.jofogas.hu/magyarorszag/auto?q=golf%205', {
+		name:				'jofogas.hu',
+		selector:			'.ad-list .ad-list-item',
+		attribute:			'data-list-id',
+		open_url:			'http://www.jofogas.hu/magyarorszag/yolo_',
+		open_url_postfix:	'.htm'
+	});
+};
+
+
+
+var weltauto_hu = function() {
+
+	parser.parse('http://www.dasweltauto.hu/d/frgSearch?brand=Vlc*&garantie=false&maxPrice=2000000&minPS=100&minRegYear=2004&page=1&pageCount=1&privat=false', {
+		name:				'weltauto.hu',
+		selector:			'.divErgebnisListe .carItem.imbestand',
+		attribute:			'data-car-id',
+		open_url:			'http://www.dasweltauto.hu/d/detail?carId='
+	});
+};
+
+
+
+var aaaauto_hu = function() {
+
+	parser.parse('http://www.aaaauto.hu/vw/?carlist=1&make=131&ymin=2004&pmin=1500000&pmax=2200000&kmmax=175000&sort[]=8&sort[]=1&srclp=1&srcvans=0&tab3cols=4', {
+		name:				'aaaauto.hu',
+		selector:			'#result_table > .tr > .td.des > h2 > a',
+		attribute:			'href',
+		attribute_modify:	function(attribute) {
+
+			var matches = attribute.match(/car\.html\?id=(\d+?)\#/);
+
+			return matches[1];
+		},
+		open_url:			'http://www.aaaauto.hu/hu/vw-polo/car.html?id='
 	});
 };
 
@@ -80,5 +149,14 @@ var hasznaltauto_hu3 = function() {
 //ingatlan_com();
 //setInterval(ingatlan_com, 1000 * 60 * 5);
 
+jofogas_hu();
+setInterval(jofogas_hu, 1000 * 60 * 15);
+
+weltauto_hu();
+setInterval(weltauto_hu, 1000 * 60 * 15);
+
+aaaauto_hu();
+setInterval(aaaauto_hu, 1000 * 60 * 15);
+
 hasznaltauto_hu();
-setInterval(hasznaltauto_hu, 1000 * 60 * 60);
+setInterval(hasznaltauto_hu, 1000 * 60 * 15);
