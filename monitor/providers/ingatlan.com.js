@@ -13,7 +13,7 @@ module.exports = {
 			selector:	'> td.address > a',
 			value:		function ( elem ) {
 
-				return elem.attr('href');
+				return 'http://ingatlan.com' + elem.attr('href');
 			}
 		},
 		name: {
