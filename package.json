@@ -2,6 +2,7 @@
 	"dependencies": {
 		"sync-request": "2.1.0",
 		"cheerio": "0.18.0",
-		"lowdb": "0.10.3"
+		"lowdb": "0.10.3",
+		"nodemailer": "1.10.0"
 	}
 }

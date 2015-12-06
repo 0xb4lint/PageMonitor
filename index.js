@@ -1,11 +1,11 @@
-var monitor			= require('./monitor');
+var monitor			= require('./monitor/monitor');
 
-var aaaautoHu		= require('./providers/aaaauto.hu');
-var alberletHu		= require('./providers/alberlet.hu');
-var dasweltautoHu	= require('./providers/dasweltauto.hu');
-var hasznaltautoHu	= require('./providers/hasznaltauto.hu');
-var ingatlanCom		= require('./providers/ingatlan.com');
-var jofogasHu		= require('./providers/jofogas.hu');
+var aaaautoHu		= require('./monitor/providers/aaaauto.hu');
+var alberletHu		= require('./monitor/providers/alberlet.hu');
+var dasweltautoHu	= require('./monitor/providers/dasweltauto.hu');
+var hasznaltautoHu	= require('./monitor/providers/hasznaltauto.hu');
+var ingatlanCom		= require('./monitor/providers/ingatlan.com');
+var jofogasHu		= require('./monitor/providers/jofogas.hu');
 
 
 

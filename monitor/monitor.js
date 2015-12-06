@@ -1,11 +1,14 @@
-var request	= require('sync-request');
-var cheerio	= require('cheerio');
-var fs		= require('fs');
-var path	= require('path');
-var low		= require('lowdb');
+var request		= require('sync-request');
+var cheerio		= require('cheerio');
+var fs			= require('fs');
+var path		= require('path');
+var low			= require('lowdb');
+var nodemailer	= require('nodemailer');
+var emailConfig	= require(__dirname + '/../email');
 
-var db		= low('db.json');
-var queue	= [];
+var db			= low(__dirname + '/../db.json');
+var queue		= [];
+var transporter	= nodemailer.createTransport( emailConfig );
 
 
 
