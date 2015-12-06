@@ -2,8 +2,15 @@ module.exports = {
 	name:		'dasweltauto.hu',
 	selector:	'div.divErgebnisListe > div.carItem',
 	attributes: {
+		id: {
+			selector:	null,
+			value:		function ( elem ) {
+
+				return parseInt( elem.attr('data-car-id') );
+			}
+		},
 		link: {
-			selector:	'',
+			selector:	null,
 			value:		function ( elem ) {
 
 				return 'http://www.dasweltauto.hu/d/detail?carId=' + elem.attr('data-car-id');

@@ -2,6 +2,13 @@ module.exports = {
 	name:		'ingatlan.com',
 	selector:	'div#search-results-main > table.search-results > tbody > tr.list-row',
 	attributes: {
+		id: {
+			selector:	null,
+			value:		function ( elem ) {
+
+				return parseInt( elem.attr('id').replace(/[^\d]/g, '') );
+			}
+		},
 		link: {
 			selector:	'> td.address > a',
 			value:		function ( elem ) {

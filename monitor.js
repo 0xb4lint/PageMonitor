@@ -1,92 +1,77 @@
-var request	= require('request');
+var request	= require('sync-request');
 var cheerio	= require('cheerio');
 var fs		= require('fs');
 var path	= require('path');
+var low		= require('lowdb');
 
+var db		= low('db.json');
 var queue	= [];
-
-
-
-var _diff = function ( A, B ) {
-
-	return A.filter(function( a ) {
-
-		for ( var i in B )
-			if ( B[i].link === a.link )
-				return false;
-
-		return true;
-	});
-};
 
 
 
 var parse = function ( config, url, email ) {
 
-	// JSON database
-	var jsonFile = path.resolve(__dirname, 'storage/' + config.name + '-' + email + '.json');
-
-	// create if not exists
-	if ( !fs.existsSync( jsonFile ) )
-		fs.writeFileSync( jsonFile, JSON.stringify( [] ) );
-
-	// load database
-	var database = JSON.parse( fs.readFileSync( jsonFile ) );
-
 	// make the request
-	request({
+	var response = request('GET', url, { timeout: 15 * 1000 });
 
-		url:		url,
-		timeout:	15 * 1000,
-		encoding:	config.options && config.options.encoding ? config.options.encoding : 'utf-8'
+	// load jQuery
+	var $ = cheerio.load( response.getBody( config.options && config.options.encoding ? config.options.encoding : 'utf-8' ) );
 
-	}, function(error, response, body) {
+	// empty array
+	var items = [];
 
-		if ( error )
-			throw error;
+	// may be useful
+	var scripts = $('script');
 
-		// load jQuery
-		var $ = cheerio.load( body );
+	// loop through items
+	$( config.selector ).each(function() {
 
-		// empty array
-		var found = [];
+		// get attributes
+		var item = {};
+		for ( var attribute in config.attributes ) {
 
-		// may be useful
-		var scripts = $('script');
+			var attributeConfig		= config.attributes[ attribute ];
+			var element				= attributeConfig.selector ? $(this).find( attributeConfig.selector ) : $(this);
 
-		// loop through items
-		$( config.selector ).each(function() {
+			item[ attribute ]	= element.length ? attributeConfig.value( element, scripts ) : null;
+		}
 
-			// get attributes
-			var attributes = {};
-			for ( var attribute in config.attributes ) {
+		if ( !item.id )
+			item.id = item.link;
 
-				var attributeConfig		= config.attributes[ attribute ];
-				var element				= $(this).find( attributeConfig.selector );
-
-				attributes[ attribute ]	= element.length ? attributeConfig.value( element, scripts ) : null;
-			}
-
-			// add to array
-			found.push( attributes );
-		});
-
-
-		// diff
-		var diff = _diff( found, database );
-
-		console.log( new Date().toLocaleString() );
-		console.log( config.name + ' - ' + email );
-		console.log( 'found', found.length );
-		console.log( 'new', diff.length );
-
-		database = database.concat( diff );
-
-		// write to database
-		fs.writeFileSync( jsonFile, JSON.stringify( database, null, "\t" ) );
-
-		console.log('===========');
+		// add to array
+		items.push( item );
 	});
+
+	// check items in database
+	var newItems		= 0;
+	var updatedItems	= 0;
+
+	for ( var i in items ) {
+
+		var item	= items[ i ];
+		var found	= db( config.name + '-' + email ).find({ id: item.id });
+
+		if ( !found ) {
+
+			db( config.name + '-' + email ).push( item );
+			newItems++;
+
+		} else if ( JSON.stringify( item ) !== JSON.stringify( found ) ) {
+
+			for ( var j in item )
+				found[ j ] = item[ j ];
+
+			updatedItems++;
+		}
+	}
+
+	console.log( new Date().toLocaleString() );
+	console.log( config.name + ' - ' + email );
+	console.log( 'found', items.length );
+	console.log( 'new', newItems );
+	console.log( 'updated', updatedItems );
+	console.log('===========');
 };
 
 

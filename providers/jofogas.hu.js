@@ -2,6 +2,13 @@ module.exports = {
 	name:		'jofogas.hu',
 	selector:	'ol.ad-list > li.ad-list-item',
 	attributes: {
+		id: {
+			selector:	null,
+			value:		function( elem ) {
+
+				return parseInt( elem.attr('data-list-id') );
+			}
+		},
 		link: {
 			selector:	'> a',
 			value:		function ( elem ) {
@@ -26,10 +33,10 @@ module.exports = {
 			}
 		},
 		price: {
-			selector:	'> a > div.middle-column > div.ad-price > span.amount',
+			selector:	'> a > div.middle-column > div.ad-price',
 			value:		function ( elem ) {
 
-				return elem.text();
+				return elem.text().trim();
 			}
 		},
 		location: {

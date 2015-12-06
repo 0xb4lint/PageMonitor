@@ -2,6 +2,15 @@ module.exports = {
 	name:		'hasznaltauto.hu',
 	selector:	'div.talalati_lista',
 	attributes: {
+		id: {
+			selector:	'> div.talalati_lista_bal > div.talalati_lista_headcont > div.talalati_lista_head > h2 > a',
+			value:		function ( elem ) {
+
+				var matches = elem.attr('href').match(/-(\d+)$/);
+
+				return parseInt( matches[1] );
+			}
+		},
 		link: {
 			selector:	'> div.talalati_lista_bal > div.talalati_lista_headcont > div.talalati_lista_head > h2 > a',
 			value:		function ( elem ) {

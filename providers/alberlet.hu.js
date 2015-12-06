@@ -2,6 +2,13 @@ module.exports = {
 	name:		'alberlet.hu',
 	selector:	'div#listing-index > div.boxes-grid > div.box-grid',
 	attributes: {
+		id: {
+			selector:	null,
+			value:		function ( elem ) {
+
+				return parseInt( elem.attr('data-listing-id') );
+			}
+		},
 		link: {
 			selector:	'> div.box-grid-head > h3 > a',
 			value:		function ( elem ) {

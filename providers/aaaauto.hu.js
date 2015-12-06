@@ -1,17 +1,16 @@
 module.exports = {
-	name:					'aaaauto.hu',
-	selector:				'div#result_table > div.tr > div.td > h2 > a',
-	attribute:				'href',
-	attributeTransformer:	function( href ) {
-
-		return href.replace(/#.+$/, '');
-	}
-};
-
-module.exports = {
 	name:		'aaaauto.hu',
 	selector:	'div#result_table > div.tr',
 	attributes: {
+		id: {
+			selector:	'> div.td > h2 > a',
+			value:		function ( elem ) {
+
+				var matches = elem.attr('href').match(/\?id=(\d+)/);
+
+				return parseInt( matches[1] );
+			}
+		},
 		link: {
 			selector:	'> div.td > h2 > a',
 			value:		function ( elem ) {
@@ -41,10 +40,10 @@ module.exports = {
 			}
 		},
 		price: {
-			selector:	'> div.td > p.car_price > a > strong > ',
+			selector:	'> div.td > p.car_price > a > strong',
 			value:		function ( elem ) {
 
-				return elem.clone().children().remove().end().text();
+				return elem.text();
 			}
 		},
 		year: {
