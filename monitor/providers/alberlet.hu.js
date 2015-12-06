@@ -13,7 +13,12 @@ module.exports = {
 			selector:	'> div.box-grid-head > h3 > a',
 			value:		function ( elem ) {
 
-				return elem.attr('href');
+				var href = elem.attr('href');
+
+				if ( href[0] === '/' )
+					return 'http://www.alberlet.hu' + href;
+
+				return href;
 			}
 		},
 		name: {
