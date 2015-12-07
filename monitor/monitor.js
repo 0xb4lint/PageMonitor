@@ -142,8 +142,23 @@ var parse = function ( config, url, email ) {
 
 		transporter.sendMail(mail, function(error, info) {
 
-			if ( error )
+			if ( error ) {
+
 				console.error( error );
+
+
+				////////////////
+				// "ROLLBACK" //
+				////////////////
+
+				// remove new items
+				for ( var i in newItems )
+					db( config.name + '-' + email ).remove({ id: newItems[ i ].id });
+
+				// fake update updated items
+				for ( var i in updatedItems )
+					db( config.name + '-' + email ).find({ id: updatedItems[ i ].id }).link += Math.random();
+			}
 		});
 	}
 };
