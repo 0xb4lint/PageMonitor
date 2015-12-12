@@ -1,8 +1,9 @@
 {
 	"dependencies": {
-		"sync-request": "2.1.0",
 		"cheerio": "0.18.0",
 		"lowdb": "0.10.3",
-		"nodemailer": "1.10.0"
+		"mandrill-api": "1.0.45",
+		"moment": "2.10.6",
+		"sync-request": "2.1.0"
 	}
 }

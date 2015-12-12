@@ -1,14 +1,18 @@
 PageMonitor
 ===========
+
+with Mandrill support
+
 ## Install
 - `npm install`
 
 ## Configure
-- edit `email.js`
+- rename `config.exampe.js` to `config.js`
+- edit `config.js`
 - add custom provider to `monitor/providers/`
 
 ## Usage
-- `node index`
+- `node page-monitor.js`
 
 ## Images
 ![](http://i.imgur.com/HEAkkpn.png)

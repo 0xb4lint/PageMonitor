@@ -1,58 +1,144 @@
-var request		= require('sync-request');
-var cheerio		= require('cheerio');
-var fs			= require('fs');
-var path		= require('path');
-var low			= require('lowdb');
-var nodemailer	= require('nodemailer');
-var emailConfig	= require(__dirname + '/../email');
+var request			= require('sync-request');
+var cheerio			= require('cheerio');
+var fs				= require('fs');
+var path			= require('path');
+var low				= require('lowdb');
+var moment			= require('moment');
+var mandrill		= require('mandrill-api/mandrill');
 
-var db			= low(__dirname + '/../db.json');
-var queue		= [];
-var transporter	= nodemailer.createTransport( emailConfig.transporter );
+var appConfig		= require(__dirname + '/../config');
+
+var queue			= [];
+var db				= low(__dirname + '/../db.json');
+var mandrillClient	= new mandrill.Mandrill( appConfig.mandrill.apiKey );
 
 
 
-var createMail = function ( mail, items ) {
+var rollback = function ( config, email, newItems, updatedItems ) {
 
-	mail.html += '<ul>' + "\n";
+	try {
 
-		for ( var i in items ) {
+		// remove new items
+		for ( var i in newItems )
+			db( config.name + '-' + email ).remove({ id: newItems[ i ].id });
 
-			var item = items[ i ];
+		// fake update updated items
+		for ( var i in updatedItems )
+			db( config.name + '-' + email ).find({ id: updatedItems[ i ].id }).link += Math.random();
 
-			mail.html += '<li>' + "\n";
+	} catch ( err ) {
 
-				mail.html += '<b>' + item.name + '</b>' + "\n";
-				mail.html += '<ul>' + "\n";
+		console.error( err );
+	}
+};
 
-					if ( item.image )
-						mail.html += '<li><img src="' + item.image + '"></li>' + "\n";
 
-					mail.html += '<li>#' + item.id + '</li>' + "\n";
-					mail.html += '<li><a href="' + item.link + '">' + item.link + '</a></li>' + "\n";
 
-					for ( var j in item ) {
+var createMailHtmlFromItems = function ( items ) {
 
-						if ( j === 'name' || j === 'id' || j === 'link' || j === 'image' || !item[ j ] )
-							continue;
+	var html = '';
 
-						mail.html += '<li>' + j + ': <b>' + item[ j ] + '</b></li>' + "\n";
-					}
+	html += '<ul>' + "\n";
 
-				mail.html += '</ul>' + "\n";
+	for ( var i in items ) {
 
-			mail.html += '</li>' + "\n";
+		var item = items[ i ];
+
+		html += '<li>' + "\n";
+
+			html += '<b>' + item.name + '</b>' + "\n";
+			html += '<ul>' + "\n";
+
+				if ( item.image )
+					html += '<li><img src="' + item.image + '"></li>' + "\n";
+
+				html += '<li>#' + item.id + '</li>' + "\n";
+				html += '<li><a href="' + item.link + '">' + item.link + '</a></li>' + "\n";
+
+				for ( var j in item ) {
+
+					if ( j === 'name' || j === 'id' || j === 'link' || j === 'image' || !item[ j ] )
+						continue;
+
+					html += '<li>' + j + ': <b>' + item[ j ] + '</b></li>' + "\n";
+				}
+
+			html += '</ul>' + "\n";
+
+		html += '</li>' + "\n";
+	}
+
+	html += '</ul>' + "\n";
+
+	return html;
+};
+
+
+
+var sendMail = function ( config, url, email, newItems, updatedItems ) {
+
+	if ( !email || ( !newItems.length && !updatedItems.length ) )
+		return;
+
+	try {
+
+		var html = '';
+
+		if ( newItems.length ) {
+
+			html += '<h1>NEW</h1>' + "\n";
+			html += createMailHtmlFromItems( newItems );
 		}
 
-	mail.html += '</ul>' + "\n";
-}
+		if ( newItems.length && updatedItems.length ) {
+
+			html += '<br>' + "\n";
+			html += '<br>' + "\n";
+		}
+
+		if ( updatedItems.length ) {
+
+			html += '<h1>UPDATED</h1>' + "\n";
+			html += createMailHtmlFromItems( updatedItems );
+		}
+
+		html += '<br>' + "\n";
+		html += '<br>' + "\n";
+		html += 'URL: <b><a href="' + url + '">' + url + '</a></b>' + "\n";
+
+		var message = {
+			html:		html,
+			subject:	appConfig.mandrill.subjectPrefix + ' ' + config.name,
+			from_email:	appConfig.mandrill.fromEmail,
+			from_name:	appConfig.mandrill.fromName,
+			to: [{
+				email:	email
+			}],
+			tags:		['page-monitor']
+		};
+
+		mandrillClient.messages.send({ message: message }, function( result ) {
+
+			console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mandrill success: ' + config.name + ' - ' + email );
+
+		}, function( err ) {
+
+			console.error('Mandrill error: ' + err.name + ' - ' + err.message);
+			rollback( config, email, newItems, updatedItems );
+		});
+
+	} catch ( err ) {
+
+		console.error( err );
+		rollback( config, email, newItems, updatedItems );
+	}
+};
 
 
 
 var parse = function ( config, url, email ) {
 
-	console.log( new Date().toLocaleString() );
-	console.log( config.name + ' - ' + email );
+	console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] ' + config.name + ' - ' + email );
 
 	// make the request
 	var response = request('GET', url, { timeout: 15 * 1000 });
@@ -109,58 +195,14 @@ var parse = function ( config, url, email ) {
 		}
 	}
 
-	console.log( 'found', items.length );
-	console.log( 'new', newItems.length );
-	console.log( 'updated', updatedItems.length );
-	console.log('===========');
+	console.log(
+		'[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] ' +
+		'found: ' + items.length + ', ' +
+		'new: ' + newItems.length + ', ' +
+		'updated: ' + updatedItems.length
+	);
 
-	if ( email && ( newItems.length || updatedItems.length ) ) {
-
-		var mail = JSON.parse(JSON.stringify( emailConfig.config ));
-
-		mail.subject	+= ' ' + config.name;
-		mail.to			= email;
-		mail.html		= '';
-
-		if ( newItems.length ) {
-
-			mail.html += '<h1>NEW</h1>' + "\n";
-			createMail( mail, newItems );
-		}
-
-		if ( newItems.length && updatedItems.length ) {
-
-			mail.html += '<br>' + "\n";
-			mail.html += '<br>' + "\n";
-		}
-
-		if ( updatedItems.length ) {
-
-			mail.html += '<h1>UPDATED</h1>' + "\n";
-			createMail( mail, updatedItems );
-		}
-
-		transporter.sendMail(mail, function(error, info) {
-
-			if ( error ) {
-
-				console.error( error );
-
-
-				////////////////
-				// "ROLLBACK" //
-				////////////////
-
-				// remove new items
-				for ( var i in newItems )
-					db( config.name + '-' + email ).remove({ id: newItems[ i ].id });
-
-				// fake update updated items
-				for ( var i in updatedItems )
-					db( config.name + '-' + email ).find({ id: updatedItems[ i ].id }).link += Math.random();
-			}
-		});
-	}
+	sendMail( config, url, email, newItems, updatedItems );
 };
 
 
@@ -187,7 +229,7 @@ var processNext = function() {
 
 
 
-var addToQueue = function ( data ) {
+var pushToQueue = function ( data ) {
 
 	queue.push( data );
 
@@ -204,7 +246,7 @@ module.exports = {
 		if ( !data.enabled )
 			return;
 
-		addToQueue( data );
-		setInterval( addToQueue, data.interval * 60 * 1000, data );
+		pushToQueue( data );
+		setInterval( pushToQueue, data.interval * 60 * 1000, data );
 	}
 };
