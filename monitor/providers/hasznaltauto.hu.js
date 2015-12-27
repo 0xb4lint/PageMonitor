@@ -34,13 +34,14 @@ module.exports = {
 		},
 		image: {
 			selector:	'> div.talalati_lista_bal > div.talalati_lista_tartalom > div.talalati_lista_kep > a > img',
-			value:		function ( elem, scripts ) {
+			value:		function ( elem, $ ) {
 
+				var scripts	= $('script');
 				var id		= elem.attr('id');
 				var regex	= new RegExp('lazy_images.' + id + ' = \'(.+?)\';');
 				var matches	= scripts.text().match( regex );
 
-				return ( typeof matches[1] === 'string' ) ? matches[1] : null;
+				return ( matches && typeof matches[1] === 'string' ) ? matches[1] : null;
 			}
 		},
 		price: {
