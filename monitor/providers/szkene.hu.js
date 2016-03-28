@@ -5,11 +5,11 @@ module.exports = {
 	attributes: {
 		id: {
 			selector:	'url',
-			value:		function ( elem ) {
+			value:		function ( elem, item ) {
 
 				var matches = elem.match(/=(\d+)$/);
 
-				return parseInt( matches[1] );
+				return parseInt( matches[1] ) + '-' + item.kezdes;
 			}
 		},
 		link: {

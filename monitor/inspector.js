@@ -84,7 +84,7 @@ var getJsonItems = function( config, url ) {
 			var attributeConfig		= config.attributes[ attribute ];
 			var element				= content[ i ][ attributeConfig.selector ];
 
-			item[ attribute ]		= element && element.length ? attributeConfig.value( element ) : null;
+			item[ attribute ]		= element && element.length ? attributeConfig.value( element, content[i] ) : null;
 		}
 
 		// use link as id

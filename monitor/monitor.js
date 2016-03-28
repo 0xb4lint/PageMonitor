@@ -19,13 +19,20 @@ var processNext = function() {
 
 		var url = next.url;
 
-		url = url.replace('{YYYY+1}', moment().add(1, 'years').format('YYYY'));
-		url = url.replace('{MM+1}', moment().add(1, 'months').format('MM'));
-		url = url.replace('{DD+1}', moment().add(1, 'days').format('DD'));
+		url = url.replace(/\{YYYY\+(\d+)\}/, function( match, $1 ) {
 
-		url = url.replace('{YYYY+2}', moment().add(2, 'years').format('YYYY'));
-		url = url.replace('{MM+2}', moment().add(2, 'months').format('MM'));
-		url = url.replace('{DD+2}', moment().add(2, 'days').format('DD'));
+			return moment().add($1, 'years').format('YYYY');
+		});
+
+		url = url.replace(/\{MM\+(\d+)\}/, function( match, $1 ) {
+
+			return moment().add($1, 'months').format('MM');
+		});
+
+		url = url.replace(/\{DD\+(\d+)\}/, function( match, $1 ) {
+
+			return moment().add($1, 'days').format('DD');
+		});
 
 		url = url.replace('{YYYY}', moment().format('YYYY'));
 		url = url.replace('{MM}', moment().format('MM'));
