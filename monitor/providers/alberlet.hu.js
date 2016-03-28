@@ -1,5 +1,6 @@
 module.exports = {
 	name:		'alberlet.hu',
+	type:		'html',
 	selector:	'div#listing-index > div.boxes-grid > div.box-grid',
 	attributes: {
 		id: {

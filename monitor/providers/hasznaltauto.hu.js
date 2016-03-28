@@ -1,5 +1,6 @@
 module.exports = {
 	name:		'hasznaltauto.hu',
+	type:		'html',
 	selector:	'div.talalati_lista',
 	attributes: {
 		id: {

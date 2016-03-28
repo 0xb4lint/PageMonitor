@@ -1,5 +1,6 @@
 module.exports = {
 	name:		'aaaauto.hu',
+	type:		'html',
 	selector:	'div#result_table > div.tr',
 	attributes: {
 		id: {

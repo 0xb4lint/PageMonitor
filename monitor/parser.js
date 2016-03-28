@@ -18,8 +18,9 @@ var loadJquery = function( response, config ) {
 
 
 module.exports = {
+	load: getUrl,
 	parse: function( config, url ) {
 
 		return loadJquery( getUrl( url ), config );
 	}
-}
+};

@@ -17,7 +17,17 @@ var processNext = function() {
 
 	try {
 
-		inspector.inspect( next.config, next.url, next.email );
+		var url = next.url;
+
+		url = url.replace('{YYYY+1}', moment().add(1, 'years').format('YYYY'));
+		url = url.replace('{MM+1}', moment().add(1, 'months').format('MM'));
+		url = url.replace('{DD+1}', moment().add(1, 'days').format('DD'));
+
+		url = url.replace('{YYYY}', moment().format('YYYY'));
+		url = url.replace('{MM}', moment().format('MM'));
+		url = url.replace('{DD}', moment().format('DD'));
+
+		inspector.inspect( next.config, url, next.email );
 
 	} catch ( err ) {
 

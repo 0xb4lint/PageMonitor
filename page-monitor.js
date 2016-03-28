@@ -6,6 +6,7 @@ var dasweltautoHu	= require('./monitor/providers/dasweltauto.hu');
 var hasznaltautoHu	= require('./monitor/providers/hasznaltauto.hu');
 var ingatlanCom		= require('./monitor/providers/ingatlan.com');
 var jofogasHu		= require('./monitor/providers/jofogas.hu');
+var szkeneHu		= require('./monitor/providers/szkene.hu');
 
 
 

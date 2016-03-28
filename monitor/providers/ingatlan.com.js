@@ -1,5 +1,6 @@
 module.exports = {
 	name:		'ingatlan.com',
+	type:		'html',
 	selector:	'div#search-results-main > table.search-results > tbody > tr.list-row',
 	attributes: {
 		id: {

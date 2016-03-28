@@ -1,5 +1,6 @@
 module.exports = {
 	name:		'dasweltauto.hu',
+	type:		'html',
 	selector:	'div.divErgebnisListe > div.carItem',
 	attributes: {
 		id: {
