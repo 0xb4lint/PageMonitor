@@ -1,7 +1,7 @@
 PageMonitor
 ===========
 
-with Mandrill support
+with Mandrill and Mailgun support
 
 ## Install
 - `npm install`

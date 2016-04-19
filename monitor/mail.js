@@ -1,7 +1,51 @@
 var moment		= require('moment');
-var mandrill	= require('mandrill-api/mandrill');
 var appConfig	= require(__dirname + '/../config');
 
+var getMailer = function ( mailService, config ) {
+	var mailFunctions = {
+		'mandrill': {
+				sendMail : function ( message ) {
+					var mandrill	= require('mandrill-api/mandrill');
+					var mandrillClient	= new mandrill.Mandrill( appConfig.mandrill.apiKey );
+					message.subject = (appConfig.mandrill.subjectPrefix ? appConfig.mandrill.subjectPrefix + ' ' : '') + config.name;
+					message.from_email = appConfig.mandrill.fromEmail;
+					message.from_name = appConfig.mandrill.fromName;
+					message.tags = ['page-monitor'];
+					return new Promise( function ( resolve, reject ) {
+						mandrillClient.messages.send( { message: message }, function( result ) {
+							resolve( result );
+						}, function( err ) {
+							reject( err );
+						});
+					});
+				}
+		},
+		'mailgun': {
+				sendMail : function ( message ) {
+					var mailgun		= require('mailgun-js')( {apiKey: appConfig.mailgun.apiKey, domain: appConfig.mailgun.domain} );
+					message.from = appConfig.mailgun.fromName + ' <' + appConfig.mailgun.fromEmail + '>';					
+					message.subject = (appConfig.mailgun.subjectPrefix ? appConfig.mailgun.subjectPrefix + ' ' : '') + config.name;
+					message['o:tag'] = 'page-monitor';
+					toList = message.to;
+					message.to = '';
+					toList.forEach(function(element, index){
+						if(index)
+							message.to += ',';
+						message.to += element.email;
+					});
+					return new Promise( function ( resolve, reject ) {
+						mailgun.messages().send(message, function ( err, result ) {
+							if( err )
+								reject( err );
+							else
+								resolve( result );
+						});
+					});
+				}			
+		}
+	};
+	return mailFunctions[mailService];
+};
 
 
 var createHtmlListFromItems = function ( items ) {
@@ -54,7 +98,6 @@ module.exports = {
 		try {
 
 			var html			= '';
-			var mandrillClient	= new mandrill.Mandrill( appConfig.mandrill.apiKey );
 
 			if ( newItems.length ) {
 
@@ -85,24 +128,18 @@ module.exports = {
 			var emails = email.split(/[,;]/);
 
 			for ( var i in emails )
-				to.push({ email: emails[ i ]});
+				to.push({ email: emails[ i ].trim()});
 
 			var message = {
 				html:		html,
-				subject:	appConfig.mandrill.subjectPrefix + ' ' + config.name,
-				from_email:	appConfig.mandrill.fromEmail,
-				from_name:	appConfig.mandrill.fromName,
-				to:			to,
-				tags:		['page-monitor']
+				to:			to
 			};
 
-			mandrillClient.messages.send({ message: message }, function( result ) {
-
-				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mandrill success: ' + config.name + ' - ' + email );
-
-			}, function( err ) {
-
-				console.error( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mandrill error: ' + err.name + ' - ' + err.message );
+			var mailer = getMailer( appConfig.mailService, config );
+			mailer.sendMail(message).then( function(result) {
+				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail success: ' + config.name + ' - ' + email );
+			}).catch( function( err ) {
+				console.error( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail error: ' + err.name + ' - ' + err.message );
 				db.rollback( config, email, newItems, updatedItems );
 			});
 
