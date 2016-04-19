@@ -1,7 +1,7 @@
 var moment		= require('moment');
 var appConfig	= require(__dirname + '/../config');
 
-var getMailer = function ( mailService, config ) {
+var getMailer = function ( config ) {
 	var mailFunctions = {
 		'mandrill': {
 				sendMail : function ( message ) {
@@ -28,8 +28,8 @@ var getMailer = function ( mailService, config ) {
 					message['o:tag'] = 'page-monitor';
 					toList = message.to;
 					message.to = '';
-					toList.forEach(function(element, index){
-						if(index)
+					toList.forEach( function( element, index ){
+						if( index )
 							message.to += ',';
 						message.to += element.email;
 					});
@@ -44,7 +44,7 @@ var getMailer = function ( mailService, config ) {
 				}			
 		}
 	};
-	return mailFunctions[mailService];
+	return mailFunctions[appConfig.mailService];
 };
 
 
@@ -135,7 +135,7 @@ module.exports = {
 				to:			to
 			};
 
-			var mailer = getMailer( appConfig.mailService, config );
+			var mailer = getMailer( config );
 			mailer.sendMail(message).then( function(result) {
 				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail success: ' + config.name + ' - ' + email );
 			}).catch( function( err ) {
