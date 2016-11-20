@@ -1,7 +1,7 @@
 module.exports = {
 	name:		'jofogas.hu',
 	type:		'html',
-	selector:	'ol.ad-list > li.ad-list-item',
+	selector:	'.search-list-container > .list-items > .list-item',
 	attributes: {
 		id: {
 			selector:	null,
