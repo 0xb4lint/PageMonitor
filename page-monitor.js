@@ -1,17 +1,18 @@
-var monitor			= require('./monitor/monitor');
+var monitor					= require('./monitor/monitor');
 
-var aaaautoHu		= require('./monitor/providers/aaaauto.hu');
-var alberletHu		= require('./monitor/providers/alberlet.hu');
-var dasweltautoHu	= require('./monitor/providers/dasweltauto.hu');
-var hasznaltautoHu	= require('./monitor/providers/hasznaltauto.hu');
-var ingatlanCom		= require('./monitor/providers/ingatlan.com');
-var jofogasHu		= require('./monitor/providers/jofogas.hu');
-var szkeneHu		= require('./monitor/providers/szkene.hu');
+var aaaautoHu				= require('./monitor/providers/aaaauto.hu');
+var alberletHu				= require('./monitor/providers/alberlet.hu');
+var dasweltautoHu			= require('./monitor/providers/dasweltauto.hu');
+var hasznaltautoHu			= require('./monitor/providers/hasznaltauto.hu');
+var ingatlanCom				= require('./monitor/providers/ingatlan.com');
+var jofogasHu				= require('./monitor/providers/jofogas.hu');
+var ingatlanJofogasHu		= require('./monitor/providers/ingatlan.jofogas.hu');
+var szkeneHu				= require('./monitor/providers/szkene.hu');
 
 
 
 monitor.index({
-	enabled:	true,
+	enabled:	false,
 	config:		alberletHu,
 	url:		'http://www.alberlet.hu/kiado_alberlet/berendezes:2/berleti-dij:0-136-ezer-ft/felszoba:nem/ingatlan-tipus:lakas/ingatlan:tegla/keppel:igen/kerulet:i+ii+iii+v+vi+vii+viii+ix+x+xi+xiii+xiv/megye:budapest/meret:60-x-m2/szoba:3-x/keres:advanced/limit:32/sort:reactivated/direction:desc',
 	email:		'valentinxxx@gmail.com',

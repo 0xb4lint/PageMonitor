@@ -1,5 +1,5 @@
 module.exports = {
-	name:		'jofogas.hu',
+	name:		'ingatlan.jofogas.hu',
 	type:		'html',
 	selector:	'.search-list-container > .list-items > .list-item > div',
 	attributes: {
@@ -45,6 +45,20 @@ module.exports = {
 			value:		function ( elem ) {
 
 				return elem.text().trim();
+			}
+		},
+		size: {
+			selector:	'.size',
+			value:		function ( elem ) {
+
+				return elem.text();
+			}
+		},
+		rooms: {
+			selector:	'.rooms',
+			value:		function ( elem ) {
+
+				return elem.text();
 			}
 		}
 	},
