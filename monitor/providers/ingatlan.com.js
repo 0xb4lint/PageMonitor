@@ -1,59 +1,52 @@
 module.exports = {
 	name:		'ingatlan.com',
 	type:		'html',
-	selector:	'div#search-results-main > table.search-results > tbody > tr.list-row',
+	selector:	'main.resultspage__main > div.resultspage__listings > div.listing',
 	attributes: {
 		id: {
 			selector:	null,
 			value:		function ( elem ) {
 
-				return parseInt( elem.attr('id').replace(/[^\d]/g, '') );
+				return parseInt( elem.attr('data-id') );
 			}
 		},
 		link: {
-			selector:	'> td.address > a',
+			selector:	'> div.listing__card > a.listing__link',
 			value:		function ( elem ) {
 
-				return 'http://ingatlan.com' + elem.attr('href');
+				return 'https://ingatlan.com' + elem.attr('href');
 			}
 		},
 		name: {
-			selector:	'> td.address > a > span.address-highlighted',
+			selector:	'> div.listing__card > a.listing__link header.listing__header > div.listing__featured-parameters > div.listing__address',
 			value:		function ( elem ) {
 
 				return elem.text();
 			}
 		},
 		image: {
-			selector:	'> td.thumbnail > div.thumbholder > div.thumbcontainer > a > img.ad-thumb',
+			selector:	'> div.listing__card > a.listing__thumbnail > img.listing__image',
 			value:		function ( elem ) {
 
 				return elem.attr('src');
 			}
 		},
 		price: {
-			selector:	'> td.centered > a > span.price-huf',
-			value:		function ( elem ) {
-
-				return elem.text();
-			}
-		},
-		location: {
-			selector:	'> td.address > a > span.zone-address',
+			selector:	'> div.listing__card > a.listing__link > header.listing__header > div.listing__featured-parameters > div.listing__price > div.price',
 			value:		function ( elem ) {
 
 				return elem.text();
 			}
 		},
 		size: {
-			selector:	'> td.centered > a > span.numbers-highlight',
+			selector:	'> div.listing__card > a.listing__link > div.listing__parameters div.listing__data--area-size',
 			value:		function ( elem ) {
 
-				return elem.parent().first().text();
+				return elem.text();
 			}
 		},
 		rooms: {
-			selector:	'> td.roomcount > a > span.numbers-highlight',
+			selector:	'> div.listing__card > a.listing__link > div.listing__parameters div.listing__data--room-count',
 			value:		function ( elem ) {
 
 				return elem.text();
