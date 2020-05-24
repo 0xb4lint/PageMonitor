@@ -4,10 +4,10 @@ var appConfig	= require(__dirname + '/../config');
 var getMailer = function ( config ) {
 	var mailFunctions = {
 		'mandrill': {
-				sendMail : function ( message ) {
+				sendMail : function ( message, tag ) {
 					var mandrill	= require('mandrill-api/mandrill');
 					var mandrillClient	= new mandrill.Mandrill( appConfig.mandrill.apiKey );
-					message.subject = (appConfig.mandrill.subjectPrefix ? appConfig.mandrill.subjectPrefix + ' ' : '') + config.name;
+					message.subject = (appConfig.mandrill.subjectPrefix ? appConfig.mandrill.subjectPrefix + ' ' : '') + tag + ' - ' + config.name;
 					message.from_email = appConfig.mandrill.fromEmail;
 					message.from_name = appConfig.mandrill.fromName;
 					message.tags = ['page-monitor'];
@@ -21,10 +21,10 @@ var getMailer = function ( config ) {
 				}
 		},
 		'mailgun': {
-				sendMail : function ( message ) {
+				sendMail : function ( message, tag ) {
 					var mailgun		= require('mailgun-js')( {apiKey: appConfig.mailgun.apiKey, domain: appConfig.mailgun.domain} );
 					message.from = appConfig.mailgun.fromName + ' <' + appConfig.mailgun.fromEmail + '>';					
-					message.subject = (appConfig.mailgun.subjectPrefix ? appConfig.mailgun.subjectPrefix + ' ' : '') + config.name;
+					message.subject = (appConfig.mailgun.subjectPrefix ? appConfig.mailgun.subjectPrefix + ' ' : '') + tag + ' - ' + config.name;
 					message['o:tag'] = 'page-monitor';
 					toList = message.to;
 					message.to = '';
@@ -90,7 +90,7 @@ var createHtmlListFromItems = function ( items ) {
 
 
 module.exports = {
-	sendMail: function ( config, url, email, newItems, updatedItems, customHTML ) {
+	sendMail: function ( config, url, email, tag, newItems, updatedItems, customHTML ) {
 
 		if ( !email || ( !newItems.length && !updatedItems.length && !customHTML ) )
 			return;
@@ -136,7 +136,7 @@ module.exports = {
 			};
 
 			var mailer = getMailer( config );
-			mailer.sendMail(message).then( function(result) {
+			mailer.sendMail(message, tag).then( function(result) {
 				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail success: ' + config.name + ' - ' + email );
 			}).catch( function( err ) {
 				console.error( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail error: ' + err.name + ' - ' + err.message );
