@@ -137,7 +137,7 @@ module.exports = {
 
 			var mailer = getMailer( config );
 			mailer.sendMail(message, tag).then( function(result) {
-				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail success: ' + config.name + ' - ' + email );
+				console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail success: ' + config.name + ' - ' + tag + ' - ' + email );
 			}).catch( function( err ) {
 				console.error( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] Mail error: ' + err.name + ' - ' + err.message );
 				db.rollback( config, email, newItems, updatedItems );
