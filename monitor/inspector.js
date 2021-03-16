@@ -114,7 +114,7 @@ var getItems = function( config, url ) {
 module.exports = {
 	inspect: function ( config, url, email, tag ) {
 
-		console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] ' + config.name + ' - ' + tag  + ' - ' + email );
+		console.log( '[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] ' + config.name + (tag ? (' - ' + tag) : '')  + ' - ' + email );
 
 		// check items in database
 		var newItems		= [];

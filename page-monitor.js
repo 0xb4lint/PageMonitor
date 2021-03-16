@@ -20,15 +20,6 @@ monitor.index({
 });
 
 monitor.index({
-	enabled:	true,
-	config:		ingatlanCom,
-	url:		'https://ingatlan.com/listar/elado+haz+csaladi-haz+ikerhaz+sorhaz+hazresz+kastely+budapest+csak-kepes+budapest+biatorbagy+budaors+40-65-mFt+95-m2-felett+300-m2telek-felett+ii-xi-xii-ker',
-	email:		'b.rozsenich@gmail.com,girgastimi@gmail.com',
-	interval:	10,
-	tag: 		'Hazak Budapest kornyeken'
-});
-
-monitor.index({
 	enabled:	false,
 	config:		hasznaltautoHu,
 	url:		'http://www.hasznaltauto.h/talalatilista/auto/T4R1MS7LU76AO22Z6TTHGOO8LHGH2OUPF9YZC7FA93QS3UDJLY4PSQZTA52W7T8JRJJU14QYWUERML9E074SH6OQLO0U0DR024C65RLODL8EFPF573LK5E9W195A34YFM4CWR05MY94FP580G1EOR5P7P8E801AHFR96GWK4ZD6CKYMWLLP5HJPJQJFY37UTDTJFQ12UKPFCZWDR355HA8CHRPQPO1A1J56KR5JW1JHKP2LPGRW0KIKMSSE5KJE643Y20T8K6R0Q0JKCWTE7RPMZJAG7TJ5UFH65CISGMFUO8DIQ15Q68I08D0D502JES9OG0QTEPETIMRCL95ZG5DC8AFM17HZ3YEP5MG4YU1YOLKTGMQD8EK3S5LQYUPKPT9AWAU1UJJKJESEOI5ACZ7TTFWS35HQ7T7YLWR5MIKK5TM6FLCTYG4R459O/page1',
