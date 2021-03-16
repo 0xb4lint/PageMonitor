@@ -38,7 +38,7 @@ var processNext = function() {
 		url = url.replace('{MM}', moment().format('MM'));
 		url = url.replace('{DD}', moment().format('DD'));
 
-		inspector.inspect( next.config, url, next.email );
+		inspector.inspect( next.config, url, next.email, next.tag );
 
 	} catch ( err ) {
 
